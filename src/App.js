@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Header from "./components/Header";
+import Modal from "./components/Modal";
+import AddBill from "./components/AddBill";
+import { thisMonthIncome } from "./config/constant";
+import "./App.css";
 
 function App() {
+  const [budget, setBudget] = React.useState(thisMonthIncome);
+  const updateBudget = (expenses) => {
+    console.log("called" + expenses);
+    setBudget(budget - expenses);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header budget={budget} />
+      <AddBill updateBudget={updateBudget} />
+      <Modal />
     </div>
   );
 }
