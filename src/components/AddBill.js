@@ -6,7 +6,6 @@ const AddBill = (props) => {
   const [desc, setDesc] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [value, setValue] = React.useState("");
-  const [bills, setBill] = React.useState([]);
   const [error, seterror] = React.useState(false);
 
   React.useEffect(() => {
@@ -20,20 +19,13 @@ const AddBill = (props) => {
     seterror(false);
   };
 
-  const totalBillsValues = () => {
-    const value = bills.reduce((acc, el) => acc + Number(el.value), 0);
-    props.updateBudget(value);
-  };
-
   const deleteBill = (id) => {
-    const newbills = bills.filter((el) => el.id !== id);
-    setBill(newbills);
-    totalBillsValues();
+    props.deleteBill(id);
   };
 
   const editBill = (id) => {
     console.log("edit clicked", id);
-    totalBillsValues();
+    props.openModal();
   };
 
   const allow = () => {
@@ -46,8 +38,7 @@ const AddBill = (props) => {
   const submit = () => {
     if (allow()) {
       const newbill = { id: Date.now(), desc, category, value };
-      setBill((prev) => [...prev, newbill]);
-      totalBillsValues();
+      props.addBill(newbill);
       clearValues();
     } else {
       seterror(true);
@@ -55,11 +46,14 @@ const AddBill = (props) => {
   };
 
   const shouldRenderTable = () => {
-    if (bills.length) {
-      return <Table data={bills} editBill={editBill} deleteBill={deleteBill} />;
+    if (props.bills.length) {
+      return (
+        <Table data={props.bills} editBill={editBill} deleteBill={deleteBill} />
+      );
     }
     return null;
   };
+  console.log("called");
 
   return (
     <>

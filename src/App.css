@@ -320,3 +320,33 @@ table td.icon:hover {
 .unpaid:hover .item__description {
   font-weight: 900;
 }
+
+/* modal */
+
+.modal {
+  position: fixed;
+  z-index: 500;
+  background-color: white;
+  width: 50%;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px black;
+  padding: 16px;
+  left: 25%;
+  top: 30%;
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__container input {
+  width: 400px;
+  margin: 10px;
+}
