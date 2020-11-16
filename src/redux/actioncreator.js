@@ -22,8 +22,36 @@ export const deleteBill = (id) => {
   };
 };
 
-export const openModal = () => {
+export const openModal = (id) => {
   return {
     type: actions.OPEN_MODAL,
+    id,
+  };
+};
+
+export const saveChanges = (id, newConfig) => {
+  return {
+    type: actions.SAVE_CHANGES,
+    id,
+    newConfig,
+  };
+};
+
+export const cancelChanges = () => {
+  return {
+    type: actions.CANCEL_CHANGES,
+  };
+};
+
+export const getFilteredList = (category) => {
+  return {
+    type: actions.GET_FILTERED_LIST,
+    category,
+  };
+};
+
+export const getAllBills = () => {
+  return {
+    type: actions.GET_ALL_BILLS,
   };
 };

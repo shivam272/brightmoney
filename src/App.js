@@ -6,12 +6,18 @@ import { connect } from "react-redux";
 import "./App.css";
 
 function App(props) {
-  console.log(props);
+  const renderError = (currentBudget) => {
+    if (currentBudget >= 0) {
+      return <AddBill budgetNegative={false} />;
+    } else {
+      return <AddBill budgetNegative={true} />;
+    }
+  };
   return (
     <div>
       <Header budget={props.budget} />
-      <AddBill />
-      {props.openModal ? <Modal /> : null}
+      {renderError(props.budget)}
+      {props.openModal ? <Modal bill={props.selectedBill} /> : null}
     </div>
   );
 }

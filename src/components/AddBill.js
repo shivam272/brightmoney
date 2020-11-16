@@ -1,12 +1,15 @@
 import React from "react";
 import Table from "./Table";
 import "../App.css";
+import { categoryOptions, renderDropList } from "../config/constant";
 
 const AddBill = (props) => {
   const [desc, setDesc] = React.useState("");
-  const [category, setCategory] = React.useState("");
+  const [category, setCategory] = React.useState("Others");
   const [value, setValue] = React.useState("");
+  const [date, setDate] = React.useState("");
   const [error, seterror] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   React.useEffect(() => {
     seterror(false);
@@ -14,9 +17,11 @@ const AddBill = (props) => {
 
   const clearValues = () => {
     setValue("");
-    setCategory("");
+    setCategory("Others");
     setDesc("");
+    setDate("");
     seterror(false);
+    setErrorMessage("");
   };
 
   const deleteBill = (id) => {
@@ -24,12 +29,11 @@ const AddBill = (props) => {
   };
 
   const editBill = (id) => {
-    console.log("edit clicked", id);
-    props.openModal();
+    props.openModal(id);
   };
 
   const allow = () => {
-    if (desc === "" || category === "" || value === "") {
+    if (desc === "" || category === "" || value === "" || date === "") {
       return false;
     }
     return true;
@@ -37,8 +41,9 @@ const AddBill = (props) => {
 
   const submit = () => {
     if (allow()) {
-      const newbill = { id: Date.now(), desc, category, value };
+      const newbill = { id: Date.now(), desc, category, value, date };
       props.addBill(newbill);
+      props.getAllBills();
       clearValues();
     } else {
       seterror(true);
@@ -48,44 +53,73 @@ const AddBill = (props) => {
   const shouldRenderTable = () => {
     if (props.bills.length) {
       return (
-        <Table data={props.bills} editBill={editBill} deleteBill={deleteBill} />
+        <Table
+          data={
+            props.filteredBillList.length ? props.filteredBillList : props.bills
+          }
+          editBill={editBill}
+          deleteBill={deleteBill}
+          currentCategoryFilter={props.currentCategoryFilter}
+          budgetNegative={props.budgetNegative}
+          getFilteredList={props.getFilteredList}
+          getAllBills={props.getAllBills}
+        />
       );
     }
     return null;
   };
-  console.log("called");
+
+  const allowRenderAdd = (allow) => {
+    const add = (
+      <div className="add__container">
+        <input
+          type="text"
+          value={desc}
+          className="add__description"
+          placeholder="Add description"
+          onChange={(event) => setDesc(event.target.value)}
+        />
+        <input
+          type="date"
+          className="add__date"
+          placeholder="date"
+          value={date}
+          onChange={(event) => setDate(event.target.value)}
+        />
+        <select
+          type="text"
+          className="add__category"
+          placeholder="Select category"
+          value={category}
+          onChange={(event) => setCategory(event.target.value)}
+        >
+          {renderDropList(categoryOptions)}
+        </select>
+        <input
+          type="number"
+          className="add__value"
+          placeholder="Value"
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+        />
+        <button className="add__btn" onClick={submit}>
+          <i className="ion-ios-checkmark-outline"></i>
+        </button>
+        {error ? <h3 className="error">All values are required</h3> : null}
+      </div>
+    );
+    return allow ? (
+      <h2 className="error error-main">
+        Adding Bills is not allowed as current budget is negative or Zero
+      </h2>
+    ) : (
+      add
+    );
+  };
 
   return (
     <>
-      <div className="add">
-        <div className="add__container">
-          <input
-            type="text"
-            value={desc}
-            className="add__description"
-            placeholder="Add description"
-            onChange={(event) => setDesc(event.target.value)}
-          />
-          <input
-            type="text"
-            className="add__category"
-            placeholder="Add category"
-            value={category}
-            onChange={(event) => setCategory(event.target.value)}
-          />
-          <input
-            type="number"
-            className="add__value"
-            placeholder="Value"
-            value={value}
-            onChange={(event) => setValue(event.target.value)}
-          />
-          <button className="add__btn" onClick={submit}>
-            <i className="ion-ios-checkmark-outline"></i>
-          </button>
-          {error ? <h3 className="error">All values are required</h3> : null}
-        </div>
-      </div>
+      <div className="add">{allowRenderAdd(props.budgetNegative)}</div>
       {shouldRenderTable()}
     </>
   );

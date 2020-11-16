@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 import * as actions from "./actionList";
 
 const initialState = {
-  currentFilter: "",
+  currentCategoryFilter: "Others",
   toBePaidBills: [],
   selectedBill: null,
   currentBudget: thisMonthIncome,
@@ -15,10 +15,49 @@ const initialState = {
 const BillReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.OPEN_MODAL:
+      const selectedBill = state.billsList.find((el) => el.id === action.id);
       return {
         ...state,
         openModal: true,
+        selectedBill: { ...selectedBill },
       };
+    case actions.GET_FILTERED_LIST:
+      const filteredList = state.billsList.filter(
+        (el) => el.category === action.category
+      );
+      return {
+        ...state,
+        filteredBillList: [...filteredList],
+        currentCategoryFilter: action.category,
+      };
+    case actions.GET_ALL_BILLS:
+      return {
+        ...state,
+        filteredBillList: [],
+        currentCategoryFilter: "Others",
+      };
+    case actions.CANCEL_CHANGES:
+      return {
+        ...state,
+        openModal: false,
+        selectedBill: null,
+      };
+    case actions.SAVE_CHANGES: {
+      const billIndex = state.billsList.findIndex((el) => el.id === action.id);
+      const copy = [...state.billsList];
+      copy[billIndex] = { id: action.id, ...action.newConfig };
+      const value =
+        Number(state.currentBudget) +
+        Number(state.billsList[billIndex].value) -
+        Number(action.newConfig.value);
+      return {
+        ...state,
+        openModal: false,
+        selectedBill: null,
+        billsList: [...copy],
+        currentBudget: value,
+      };
+    }
     case actions.DELETE_BILL:
       const bill = state.billsList.find((el) => el.id === action.id);
       const value = Number(state.currentBudget) + Number(bill.value);

@@ -4,12 +4,15 @@ import {
   addBill,
   deleteBill,
   openModal,
-  editBill,
+  getFilteredList,
+  getAllBills,
 } from "../redux/actioncreator";
 
 const mapStateToProps = (state) => {
   return {
     bills: state.bills.billsList,
+    currentCategoryFilter: state.bills.currentCategoryFilter,
+    filteredBillList: state.bills.filteredBillList,
   };
 };
 
@@ -18,14 +21,17 @@ const mapActionToProps = (dispatch) => {
     addBill: (config) => {
       dispatch(addBill(config));
     },
-    editBill: (id, config) => {
-      dispatch(editBill(id, config));
-    },
-    openModal: () => {
-      dispatch(openModal());
+    openModal: (id) => {
+      dispatch(openModal(id));
     },
     deleteBill: (id) => {
       dispatch(deleteBill(id));
+    },
+    getFilteredList: (category) => {
+      dispatch(getFilteredList(category));
+    },
+    getAllBills: () => {
+      dispatch(getAllBills());
     },
   };
 };
