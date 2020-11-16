@@ -395,6 +395,7 @@ table td.icon:hover {
   padding: 5px;
   border-radius: 5px;
   font-weight: bold;
+  margin-right: 10px;
 }
 
 .Button:hover {

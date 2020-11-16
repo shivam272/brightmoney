@@ -3,8 +3,8 @@ import { combineReducers } from "redux";
 import * as actions from "./actionList";
 
 const initialState = {
-  currentCategoryFilter: "Others",
-  toBePaidBills: [],
+  currentCategoryFilter: "All",
+  filteredListRequested: false,
   selectedBill: null,
   currentBudget: thisMonthIncome,
   billsList: [],
@@ -22,19 +22,24 @@ const BillReducer = (state = initialState, action) => {
         selectedBill: { ...selectedBill },
       };
     case actions.GET_FILTERED_LIST:
-      const filteredList = state.billsList.filter(
+      let filteredList = state.billsList.filter(
         (el) => el.category === action.category
       );
+      if (action.category === "All") {
+        filteredList = [...state.billsList];
+      }
       return {
         ...state,
         filteredBillList: [...filteredList],
         currentCategoryFilter: action.category,
+        filteredListRequested: true,
       };
     case actions.GET_ALL_BILLS:
       return {
         ...state,
         filteredBillList: [],
-        currentCategoryFilter: "Others",
+        currentCategoryFilter: "All",
+        filteredListRequested: false,
       };
     case actions.CANCEL_CHANGES:
       return {

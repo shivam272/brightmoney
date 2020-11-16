@@ -13,6 +13,7 @@ const mapStateToProps = (state) => {
     bills: state.bills.billsList,
     currentCategoryFilter: state.bills.currentCategoryFilter,
     filteredBillList: state.bills.filteredBillList,
+    filteredListRequested: state.bills.filteredListRequested,
   };
 };
 

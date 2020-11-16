@@ -23,25 +23,41 @@ const Table = (props) => {
     props.getAllBills();
   };
 
+  const deleteBill = (id) => {
+    props.deleteBill(id);
+    if (props.filteredListRequested) {
+      props.getFilteredList(props.currentCategoryFilter);
+    }
+  };
+
+  const getGraph = () => {
+    console.log("graph");
+  };
+
   return (
     <div className="container clearfix">
       <div className="income">
         <div className="table_header">
-          <button className="button" onClick={getAllBills}>
-            Get All Bills
-          </button>
+          <div>
+            <button className="button" onClick={getAllBills}>
+              Get All Bills
+            </button>
+            <button className="button" onClick={getGraph}>
+              Get Graph
+            </button>
+          </div>
+
           <h2 className="icome__title">List of Bills</h2>
           <div>
-            <label for="category">Filter by Category : </label>
+            <label>Filter by Category : </label>
             <select
-              name="category"
               type="text"
               className="add__category"
               placeholder="Select category"
               value={props.currentCategoryFilter}
               onChange={(event) => getFilteredList(event.target.value)}
             >
-              {renderDropList(categoryOptions)}
+              {renderDropList([...categoryOptions, "All"])}
             </select>
           </div>
         </div>
@@ -75,7 +91,7 @@ const Table = (props) => {
                   <td className="icon">
                     <i
                       className="ion-ios-close-outline"
-                      onClick={() => props.deleteBill(el.id)}
+                      onClick={() => deleteBill(el.id)}
                     ></i>
                   </td>
                 </tr>

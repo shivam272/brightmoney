@@ -15,6 +15,9 @@ const Modal = (props) => {
     const { id } = selectedBill;
     const newConfig = { desc, category, value, date };
     props.saveChanges(id, newConfig);
+    if (props.filteredListRequested) {
+      props.getFilteredList(props.currentCategoryFilter);
+    }
   };
 
   const cancelChanges = () => {

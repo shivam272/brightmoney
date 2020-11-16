@@ -13,6 +13,7 @@ const AddBill = (props) => {
 
   React.useEffect(() => {
     seterror(false);
+    setErrorMessage("");
   }, [desc, category, value]);
 
   const clearValues = () => {
@@ -42,11 +43,18 @@ const AddBill = (props) => {
   const submit = () => {
     if (allow()) {
       const newbill = { id: Date.now(), desc, category, value, date };
-      props.addBill(newbill);
-      props.getAllBills();
-      clearValues();
+      const dateFilled = new Date(date);
+      if (dateFilled.getMonth() === new Date().getMonth()) {
+        props.addBill(newbill);
+        props.getAllBills();
+        clearValues();
+      } else {
+        seterror(true);
+        setErrorMessage("Date is allowed only for current month");
+      }
     } else {
       seterror(true);
+      setErrorMessage("All values are mandatory");
     }
   };
 
@@ -55,7 +63,7 @@ const AddBill = (props) => {
       return (
         <Table
           data={
-            props.filteredBillList.length ? props.filteredBillList : props.bills
+            props.filteredListRequested ? props.filteredBillList : props.bills
           }
           editBill={editBill}
           deleteBill={deleteBill}
@@ -63,6 +71,7 @@ const AddBill = (props) => {
           budgetNegative={props.budgetNegative}
           getFilteredList={props.getFilteredList}
           getAllBills={props.getAllBills}
+          filteredListRequested={props.filteredListRequested}
         />
       );
     }
@@ -105,7 +114,7 @@ const AddBill = (props) => {
         <button className="add__btn" onClick={submit}>
           <i className="ion-ios-checkmark-outline"></i>
         </button>
-        {error ? <h3 className="error">All values are required</h3> : null}
+        {error ? <h3 className="error">{errorMessage}</h3> : null}
       </div>
     );
     return allow ? (

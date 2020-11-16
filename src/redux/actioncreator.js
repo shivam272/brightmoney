@@ -55,3 +55,9 @@ export const getAllBills = () => {
     type: actions.GET_ALL_BILLS,
   };
 };
+
+export const getGraph = () => {
+  return {
+    type: actions.GET_GRAPH,
+  };
+};

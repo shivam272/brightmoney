@@ -29,4 +29,10 @@ export const renderDropList = (options) =>
     </option>
   ));
 
+export const getDateMonthHeader = () => {
+  const currentYear = new Date().getFullYear();
+  const currentMonth = monthArray[new Date().getMonth()];
+  return { currentMonth, currentYear };
+};
+
 export const thisMonthIncome = 50000;
