@@ -7,3 +7,4 @@ export const CANCEL_CHANGES = "CANCEL_CHANGES";
 export const GET_FILTERED_LIST = "GET_FILTERED_LIST";
 export const GET_ALL_BILLS = "GET_ALL_BILLS";
 export const GET_GRAPH = "GET_GRAPH";
+export const CLOSE_GRAPH = "CLOSE_GRAPH";

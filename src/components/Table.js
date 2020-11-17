@@ -31,7 +31,7 @@ const Table = (props) => {
   };
 
   const getGraph = () => {
-    console.log("graph");
+    props.getGraph();
   };
 
   return (

@@ -4,7 +4,11 @@ import Modal from "./components/Modal";
 import AddBill from "./components/AddBillContainer";
 import Graph from "./components/Graph";
 import { connect } from "react-redux";
-import { getFilteredList, getAllBills } from "./redux/actioncreator";
+import {
+  getFilteredList,
+  getAllBills,
+  closeGraph,
+} from "./redux/actioncreator";
 import "./App.css";
 
 function App(props) {
@@ -28,6 +32,9 @@ function App(props) {
           filteredListRequested={props.filteredListRequested}
         />
       ) : null}
+      {props.openGraphModal ? (
+        <Graph data={props.billsList} closeGraph={props.closeGraph} />
+      ) : null}
     </div>
   );
 }
@@ -39,6 +46,8 @@ const mapStateToProps = (state) => {
     currentCategoryFilter: state.bills.currentCategoryFilter,
     filteredBillList: state.bills.filteredBillList,
     filteredListRequested: state.bills.filteredListRequested,
+    billsList: state.bills.billsList,
+    openGraphModal: state.bills.openGraphModal,
   };
 };
 
@@ -49,6 +58,9 @@ const mapActionToProps = (dispatch) => {
     },
     getAllBills: () => {
       dispatch(getAllBills());
+    },
+    closeGraph: () => {
+      dispatch(closeGraph());
     },
   };
 };

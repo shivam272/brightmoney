@@ -401,3 +401,15 @@ table td.icon:hover {
 .Button:hover {
   transform: scale(1.2);
 }
+
+/* graph */
+.graph.modal {
+  top: 10%;
+  display: block;
+  border: 3px solid #111;
+  padding: 16px 10px;
+}
+
+.graph .modal__container {
+  display: block;
+}

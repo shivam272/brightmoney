@@ -6,6 +6,7 @@ import {
   openModal,
   getFilteredList,
   getAllBills,
+  getGraph,
 } from "../redux/actioncreator";
 
 const mapStateToProps = (state) => {
@@ -33,6 +34,9 @@ const mapActionToProps = (dispatch) => {
     },
     getAllBills: () => {
       dispatch(getAllBills());
+    },
+    getGraph: () => {
+      dispatch(getGraph());
     },
   };
 };

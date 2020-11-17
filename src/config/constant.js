@@ -13,6 +13,21 @@ export const monthArray = [
   "December",
 ];
 
+export const shortMonthArray = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 export const categoryOptions = [
   "Food",
   "Travel",

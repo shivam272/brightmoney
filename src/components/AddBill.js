@@ -72,6 +72,7 @@ const AddBill = (props) => {
           getFilteredList={props.getFilteredList}
           getAllBills={props.getAllBills}
           filteredListRequested={props.filteredListRequested}
+          getGraph={props.getGraph}
         />
       );
     }

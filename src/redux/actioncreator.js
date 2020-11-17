@@ -61,3 +61,9 @@ export const getGraph = () => {
     type: actions.GET_GRAPH,
   };
 };
+
+export const closeGraph = () => {
+  return {
+    type: actions.CLOSE_GRAPH,
+  };
+};

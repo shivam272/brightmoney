@@ -10,6 +10,7 @@ const initialState = {
   billsList: [],
   filteredBillList: [],
   openModal: false,
+  openGraphModal: false,
 };
 
 const BillReducer = (state = initialState, action) => {
@@ -79,6 +80,16 @@ const BillReducer = (state = initialState, action) => {
         ...state,
         billsList: [...state.billsList, action.bill],
         currentBudget: state.currentBudget - action.bill.value,
+      };
+    case actions.GET_GRAPH:
+      return {
+        ...state,
+        openGraphModal: true,
+      };
+    case actions.CLOSE_GRAPH:
+      return {
+        ...state,
+        openGraphModal: false,
       };
     default:
       return state;
