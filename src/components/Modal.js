@@ -70,6 +70,7 @@ const Modal = (props) => {
 const mapStateToProps = (state) => {
   return {
     selectedBill: state.bills.selectedBill,
+    data:'shivam'
   };
 };
 
