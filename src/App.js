@@ -42,6 +42,7 @@ const mapStateToProps = (state) => {
     filteredListRequested: state.bills.filteredListRequested,
     billsList: state.bills.billsList,
     openGraphModal: state.bills.openGraphModal,
+    second: "second",
     first: "first",
   };
 };
