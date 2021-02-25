@@ -44,6 +44,7 @@ const mapStateToProps = (state) => {
     openGraphModal: state.bills.openGraphModal,
     second: "second",
     first: "first",
+    master: "master",
   };
 };
 
